@@ -1,0 +1,1164 @@
+################ Packages#############################
+remove.packages("rlang")
+install.packages("rlang")
+library(rlang)
+
+install.packages("ggplot2")
+library(ggplot2)
+writeLines('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', con = "~/.Renviron")
+Sys.which("make")
+
+install.packages(c("rlang", "ggplot2"))
+
+library(plyr)
+install.packages("plry")
+
+install.packages("dplry")
+library(dplyr)
+
+install.packages("ggfortify")
+library(ggfortify)
+
+install.packages("tidyverse")
+library(tidyverse)
+
+install.packages("multcompView")
+library(multcompView)
+
+install.packages("readr")
+library(readr)
+
+install.packages("gridExtra")
+library(gridExtra)
+
+install.packages("ggpubr")
+library(ggpubr)
+
+install.packages("ggpmisc")
+library(ggpubr)
+
+library(lubridate)
+
+install.packages("effsize")
+library(effsize)
+
+install.packages("AICcmodavg")
+library(AICcmodavg)
+
+install.packages("factoextra")
+install.packages(c("FactoMineR", "factoextra"))
+library(factoextra)
+
+install.packages("FactoMineR")
+library(FactoMineR)
+#############Load Data Sets##################################################################
+CrabData <- read.csv("C:/Users/cestr/Downloads/DataforReseach/CrabResearchData2022_11_23(Final).csv")
+CrabDataNOInjs <- read.csv("C:/Users/cestr/Downloads/DataforReseach/CrabResearchData2022_11_23_NOInjs.csv")
+view(CrabData)
+RATemps2021Mean<- read.csv("C:/Users/cestr/Downloads/DataforReseach/JointRK123456Temp21.csv")
+view(RATemps2021Mean) ############# All Rock Data (NEEDS Updating
+
+MinT <- read.csv("C:/Users/cestr/Downloads/DataforReseach/JointRK123456MinTemp21.csv")
+
+WeatherData4_9_21 <- read_csv("C:/Users/cestr/Downloads/WeatherData4_9_21.csv", 
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), 
+                                               Time = col_time(format = "%H:%M")))
+view(WeatherData4_9_21)
+WeatherdailyMMM<- read.csv("C:/Users/cestr/Downloads/DataforReseach/MMMAtmovRockTempWithSupp.csv")
+WeatherdailyMMM$Date <- as.Date(WeatherdailyMMM$Date)
+view(WeatherdailyMMM)
+MaxAtmovRockTempWithSupp<- read.csv("C:/Users/cestr/Downloads/MaxAtmovRockTempWithSupp.csv")
+
+WeatherPCA <- read.csv("C:/Users/cestr/Downloads/WeatherData4_9_21MODPCA.csv")
+
+MaxAtmovRockTempWSupp_HDWEHIHB <- read.csv("C:/Users/cestr/Downloads/MaxAtmovRockTempWSupp_HDWEHIHB.csv")
+MaxAtmovRockTempWSupp_HDWEHIHBO <- read.csv("C:/Users/cestr/Downloads/MaxAtmovRockTempWSupp_HDWEHIHBO.csv")
+view(MaxAtmovRockTempWSupp_HDWEHIHBO)
+
+names(WeatherPCA)
+WeatherPCAMean <-ddply(WeatherPCA,.(ï..Date), function(d) max(d$TempOut,HiTemp))
+head(WeatherPCAMean)
+names(WeatherPCAMean)=c("Date","TempOut, HiTemp")
+write.csv(WeatherPCAMean, "c:WeatherPCAMean.xcsv")
+View(WeatherPCAMean)
+################## Loads New RK temp data ########################################################
+RO1Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock1Apr22.csv")
+RO2Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock2Apr22.csv")
+RO3Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock3Apr22.csv")
+RO4Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock4Apr22.csv")
+RO5Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock5Apr22.csv")
+RO6Temps2021<- read.csv("C:/Users/cestr/Downloads/DataforReseach/Rock6Apr22.csv")
+View(RO2Temps2021)
+################################Load New Formatted Rock Data###############################################
+RO2TESTTemps2021<- read.csv("C:/Users/cestr/Downloads/data for rscript/Rock2_1_22.csv")
+View(RO2TESTTemps2021)
+
+
+RO1Temps2021$Date = substr(RO1Temps2021$Day,1,9)  #split time and day apart 
+RO1Temps2021$Time = substr(RO1Temps2021$Day,10,21) 
+write.csv(RO1Temps2021, "c:RO1Temps2021.csv")
+
+RO2Temps2021$Date = substr(RO2Temps2021$Day,1,10)  #split time and day apart 
+RO2Temps2021$Time = substr(RO2Temps2021$Day,11,21) 
+write.csv(RO2Temps2021, "c:RO2Temps2021.csv")
+
+RO3Temps2021$Date = substr(RO3Temps2021$Day,1,10)  #split time and day apart 
+RO3Temps2021$Time = substr(RO3Temps2021$Day,11,21) 
+write.csv(RO3Temps2021, "c:RO3Temps2021.csv")
+
+RO4Temps2021$Date = substr(RO4Temps2021$Day,1,10)  #split time and day apart 
+RO4Temps2021$Time = substr(RO4Temps2021$Day,11,21) 
+write.csv(RO4Temps2021, "c:RO4Temps2021.csv")
+
+RO5Temps2021$Date = substr(RO5Temps2021$Day,1,10)  #split time and day apart 
+RO5Temps2021$Time = substr(RO5Temps2021$Day,11,21) 
+write.csv(RO5Temps2021, "c:RO5Temps2021.csv")
+view(RO5Temps2021)
+
+RO6Temps2021$Date = substr(RO6Temps2021$Day,1,10)  #split time and day apart 
+RO6Temps2021$Time = substr(RO6Temps2021$Day,11,21) 
+write.csv(RO6Temps2021, "c:RO6Temps2022F.csv")
+
+RO1Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO1Temps2021.csv")
+RO2Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO2Temps2021.csv")
+RO3Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO3Temps2021.csv")
+RO4Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO4Temps2021.csv")
+RO5Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO5Temps2021.csv")
+RO6Temps2021Form<- read.csv("C:/Users/cestr/Downloads/DataforReseach/RockTemps2021/RO6Temps2022F.csv")
+View(RO6Temps2021Form)
+##############################Get Mean for all Rocks#########################################
+RK1Mean2021<-ddply(RO1Temps2021Form,.(Date), function(d) mean(d$R1TempC))
+head(RK1Mean2021)
+names(RK1Mean2021)=c("Date","R1TempC")
+write.csv(RK1Mean2021, "c:RK1Mean2021.xcsv")
+View(RK1Mean2021)
+
+RK2Mean2021<-ddply(RO2Temps2021Form,.(Date), function(d) mean(d$R2TempC))
+head(RK2Mean2021)
+names(RK2Mean2021)=c("Date","R2TempC")
+write.csv(RK2Mean2021, "c:RK2Mean2021.xcsv")
+
+RK3Mean2021<-ddply(RO3Temps2021Form,.(Date), function(d) mean(d$R3TempC))
+head(RK3Mean2021)
+names(RK3Mean2021)=c("Date","R3TempC")
+write.csv(RK3Mean2021, "c:RK3Mean2021.xcsv")
+
+RK4Mean2021<-ddply(RO4Temps2021Form,.(Date), function(d) mean(d$R4TempC))
+head(RK4Mean2021)
+names(RK4Mean2021)=c("Date","R4TempC")
+write.csv(RK4Mean2021, "c:RK4Mean2021.xcsv")
+
+RK5Mean2021<-ddply(RO5Temps2021Form,.(Date), function(d) mean(d$R5TempC))
+head(RK5Mean2021)
+names(RK5Mean2021)=c("Date","R5TempC")
+write.csv(RK5Mean2021, "c:RK5Mean2021.xcsv")
+
+RK6Mean2021<-ddply(RO6Temps2021Form,.(Date), function(d) mean(d$R6TempC))
+head(RK6Mean2021)
+names(RK6Mean2021)=c("Date","R6TempC")
+write.csv(RK6Mean2021, "c:RK6Mean2021.xcsv")
+
+JointRK45Temp21 <- full_join(RK5Mean2021, RK4Mean2021, by = "Date")   ############Join Logger Temps in one place (rename temp C for each RK#)
+View(JointRK45Temp21)
+
+JointRK456Temp21 <- full_join(JointRK45Temp21, RK6Mean2021, by = "Date")
+View(JointRK456Temp21)
+
+JointRK3456Temp21 <- full_join(JointRK456Temp21, RK3Mean2021, by = "Date")
+View(JointRK3456Temp21)
+
+JointRK23456Temp21 <- full_join(JointRK3456Temp21, RK2Mean2021, by = "Date")
+View(JointRK23456Temp21)
+
+JointRK123456Temp21 <- full_join(JointRK23456Temp21, RK1Mean2021, by = "Date")
+View(JointRK123456Temp21)
+
+write.csv(JointRK123456Temp21, "c:/Users/cestr/Downloads/JointRK123456Temp21.csv")
+RATemps2021Mean<- read.csv("C:/Users/cestr/Downloads/DataforReseach/JointRK123456Temp21.csv")
+view(RATemps2021Mean) ############# All Rock Data (NEEDS Updating)
+
+RO2Temps2021$Day = substr(RO2Temps2021$Date,1,8)  #split time and day apart 
+RO2Temps2021$Time = substr(RO2Temps2021$Date,12,21) 
+View(RO2Temps2021)
+
+RK2Mean2021<-ddply(RO2Temps2021,.(Day), function(d) mean(d$TempC))
+head(RK2Mean2021)
+names(RK2Mean2021)=c("Day","TempC")
+write.csv(RK2Mean2021, "c:/Users/cestr/Downloads/MicroHabMean_10_2021.xcsv")
+View(RK2Mean2021)
+#######################################Get Max Temp for all Rocks ##############################################
+RK1Max2021<-ddply(RO1Temps2021Form,.(Date), function(d) max(d$R1TempC))
+head(RK1Max2021)
+names(RK1Max2021)=c("Date","R1TempC")
+write.csv(RK1Max2021, "c:RK1Max2021.xcsv")
+View(RK1Max2021)
+
+RK2Max2021<-ddply(RO2Temps2021Form,.(Date), function(d) max(d$R2TempC))
+head(RK2Max2021)
+names(RK2Max2021)=c("Date","R2TempC")
+write.csv(RK2Max2021, "c:RK2Max2021.xcsv")
+
+RK3Max2021<-ddply(RO3Temps2021Form,.(Date), function(d) max(d$R3TempC))
+head(RK3Max2021)
+names(RK3Max2021)=c("Date","R3TempC")
+write.csv(RK3Max2021, "c:RK3Max2021.xcsv")
+
+RK4Max2021<-ddply(RO4Temps2021Form,.(Date), function(d) max(d$R4TempC))
+head(RK4Max2021)
+names(RK4Max2021)=c("Date","R4TempC")
+write.csv(RK4Max2021, "c:RK4Max2021.xcsv")
+
+RK5Max2021<-ddply(RO5Temps2021Form,.(Date), function(d) max(d$R5TempC))
+head(RK5Max2021)
+names(RK5Max2021)=c("Date","R5TempC")
+write.csv(RK5Max2021, "c:RK5Max2021.xcsv")
+
+RK6Max2021<-ddply(RO6Temps2021Form,.(Date), function(d) max(d$R6TempC))
+head(RK6Max2021)
+names(RK6Max2021)=c("Date","R6TempC")
+write.csv(RK6Max2021, "c:RK6Max2021.xcsv")
+
+JointRK45MaxTemp21 <- full_join(RK5Max2021, RK4Max2021, by = "Date")   ############Join Logger Temps in one place (rename temp C for each RK#)
+View(JointRK45MaxTemp21)
+
+JointRK456MaxTemp21 <- full_join(JointRK45MaxTemp21, RK6Max2021, by = "Date")
+View(JointRK456MaxTemp21)
+
+JointRK3456MaxTemp21 <- full_join(JointRK456MaxTemp21, RK3Max2021, by = "Date")
+View(JointRK3456MaxTemp21)
+
+JointRK23456MaxTemp21 <- full_join(JointRK3456MaxTemp21, RK2Max2021, by = "Date")
+View(JointRK23456MaxTemp21)
+
+JointRK123456MaxTemp21 <- full_join(JointRK23456MaxTemp21, RK1Max2021, by = "Date")
+View(JointRK123456MaxTemp21)
+
+write.csv(JointRK123456MaxTemp21, "c:/Users/cestr/Downloads/JointRK123456MaxTemp21.csv")
+JointRK123456MaxTemp21<- read.csv("C:/Users/cestr/Downloads/JointRK123456MaxTemp21.csv")
+view(JointRK123456MaxTemp21)
+summary(JointRK123456MaxTemp21)
+#######################################Get Min Temp for all Rocks ##############################################
+RK1Min2021<-ddply(RO1Temps2021Form,.(Date), function(d) min(d$R1TempC))
+head(RK1Min2021)
+names(RK1Min2021)=c("Date","R1MinTempC")
+write.csv(RK1Min2021, "c:RK1Min2021.xcsv")
+View(RK1Min2021)
+
+RK2Min2021<-ddply(RO2Temps2021Form,.(Date), function(d) min(d$R2TempC))
+head(RK2Min2021)
+names(RK2Min2021)=c("Date","R2MinTempC")
+write.csv(RK2Min2021, "c:RK2Min2021.xcsv")
+View(RK2Min2021)
+
+RK3Min2021<-ddply(RO3Temps2021Form,.(Date), function(d) min(d$R3TempC))
+head(RK3Min2021)
+names(RK3Min2021)=c("Date","R3MinTempC")
+write.csv(RK3Min2021, "c:RK3Min2021.xcsv")
+
+RK4Min2021<-ddply(RO4Temps2021Form,.(Date), function(d) min(d$R4TempC))
+head(RK4Min2021)
+names(RK4Min2021)=c("Date","R4MinTempC")
+write.csv(RK4Min2021, "c:RK4Min2021.xcsv")
+
+RK5Min2021<-ddply(RO5Temps2021Form,.(Date), function(d) min(d$R5TempC))
+head(RK5Min2021)
+names(RK5Min2021)=c("Date","R5MinTempC")
+write.csv(RK5Min2021, "c:RK5Min2021.xcsv")
+
+RK6Min2021<-ddply(RO6Temps2021Form,.(Date), function(d) min(d$R6TempC))
+head(RK6Min2021)
+names(RK6Min2021)=c("Date","R6MinTempC")
+write.csv(RK6Min2021, "c:RK6M20in21.xcsv")
+view(RK5Min2021)
+
+JointRK45MinTemp21 <- full_join(RK5Min2021, RK4Min2021, by = "Date")   ############Join Logger Temps in one place (rename temp C for each RK#)
+View(JointRK45MinTemp21)
+
+JointRK456MinTemp21 <- full_join(JointRK45MinTemp21, RK6Min2021, by = "Date")
+View(JointRK456MinTemp21)
+
+JointRK3456MinTemp21 <- full_join(JointRK456MinTemp21, RK3Min2021, by = "Date")
+View(JointRK3456MinTemp21)
+
+JointRK23456MinTemp21 <- full_join(JointRK3456MinTemp21, RK2Min2021, by = "Date")
+View(JointRK23456MinTemp21)
+
+JointRK123456MinTemp21 <- full_join(JointRK23456MinTemp21, RK1Min2021, by = "Date")
+View(JointRK123456MinTemp21)
+
+write.csv(JointRK123456MinTemp21, "c:/Users/cestr/Downloads/JointRK123456MinTemp21.csv")
+MinT <- read.csv("C:/Users/cestr/Downloads/DataforReseach/JointRK123456MinTemp21.csv")
+view(MinT)
+################injury to escape temp#################################################
+CrabData$InjLV <- as.factor(CrabData$InjLV)
+CrabData$SexNum <- as.factor(CrabData$SexNum)
+CrabData$Reproductive.State..0.1. <- as.factor(CrabData$Reproductive.State..0.1.)
+CrabData$FBCWCata <- as.factor(CrabData$FBCWCata)
+head(CrabData)
+
+CrabInj <- ggplot(CrabData, aes(x=InjLV, y=EscapeTemp, color=InjLV)) +
+  geom_boxplot()+
+  xlab("Injury Level")+
+  ylab("Escape Temperature (°C)")+
+  geom_text(data = Tk, aes(x = InjLV, y = quant, label = cld),size = 6, vjust=-1, hjust =-1)
+
+CrabInj + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("0" = "No Inj", "1" = "Chipped Claw",
+                                                                           "2" = "Missing Claw", "3" = "Missing Leg","4" = " 2+ Missing Limbs")) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")
+
+anovaINJ <- aov(EscapeTemp ~ InjLV, data = CrabData)
+summary(anovaINJ)      
+tukeyINJ <- TukeyHSD(anovaINJ)
+print(tukeyINJ)
+cld <- multcompLetters4(anovaINJ, tukeyINJ)
+print(cld)
+Tk <- group_by(CrabData, InjLV) %>%
+  summarise(mean=mean(EscapeTemp), quant = quantile(EscapeTemp, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the Tk table
+cld <- as.data.frame.list(cld$InjLV)
+Tk$cld <- cld$Letters
+
+print(Tk)
+ggplot(CrabData, aes(InjLV, EscapeTemp)) + 
+  geom_boxplot()
+
+# extracting the compact letter display and adding to the Tk table
+cld <- as.data.frame.list(cld$feed)
+Tk$cld <- cld$Letters
+
+print(Tk)
+names(CrabData)
+CrabBCINJ <- ggplot(CrabData, aes(x=InjLV, y= Body.Condition.FultonÃ...s..K..Dry, na.rm = TRUE, color=InjLV)) +
+  geom_boxplot(na.rm = TRUE)+
+  xlab("Injury Level")+
+  ylab("Fultons K Body Condition")
+
+CrabBCINJ + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("0" = "No Inj", "1" = "Chipped Claw",
+                                                                           "2" = "Missing Claw", "3" = "Missing Leg","4" = " 2+ Missing Limbs")) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")
+anovaBCINJ <- aov(Body.Condition.FultonÃ...s..K..Dry ~ InjLV, data = CrabData)
+summary(anovaBCINJ) 
+
+####################################BC FK to Inj######################################################
+CrabInjBC <- ggplot(CrabData, aes(x=Body.Condition.FultonÃ...s..K..Dry, y=EscapeTemp, color=InjLV)) +
+  geom_boxplot()+
+  xlab("Injury Level")+
+  ylab("Fultons K Body Condition")+
+  geom_text(data = Tk, aes(x = InjLV, y = quant, label = cld),size = 6, vjust=-1, hjust =-1)
+
+CrabInjBC + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("0" = "No Inj", "1" = "Chipped Claw",
+                                                                           "2" = "Missing Claw", "3" = "Missing Leg","4" = " 2+ Missing Limbs")) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")
+
+anovaINJBC <- aov(Body.Condition.FultonÃ...s..K..Dry ~ InjLV, data = CrabData)
+summary(anovaINJBC)      
+tukeyINJBC <- TukeyHSD(anovaINJBC)
+print(tukeyINJBC)
+cldBC <- multcompLetters4(anovaINJBC, tukeyINJBC)
+print(cldBC)
+TkBC <- group_by(CrabData, InjLV) %>%
+  summarise(mean=mean(Body.Condition.FultonÃ...s..K..Dry), quant = quantile(Body.Condition.FultonÃ...s..K..Dry, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the Tk table
+cldBC <- as.data.frame.list(cldBC$InjLV)
+TkBC$cldBC <- cldBC$Letters
+
+print(TkBC)
+ggplot(CrabData, aes(InjLV, Body.Condition.FultonÃ...s..K..Dry)) + 
+  geom_boxplot()
+
+# extracting the compact letter display and adding to the Tk table
+cldBC <- as.data.frame.list(cldBC$feed)
+TkBC$cldBC <- cldBC$Letters
+
+#############################BC Le Cren to Inj######################################################
+CrabInjBC <- ggplot(CrabData, aes(x=InjLV, y=Le.Crens.BC, color=InjLV)) +
+  geom_boxplot()+
+  xlab("Injury Level")+
+  ylab("Le Crens Body Condition")+
+  geom_text(data = Tk, aes(x = InjLV, y = quant, label = cld),size = 6, vjust=-1, hjust =-1)
+
+CrabInjBC + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("0" = "No Inj", "1" = "Chipped Claw",
+                                                                           "2" = "Missing Claw", "3" = "Missing Leg","4" = " 2+ Missing Limbs")) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")
+
+anovaINJBC <- aov(Le.Crens.BC ~ InjLV, data = CrabData)
+summary(anovaINJBC)      
+tukeyINJBC <- TukeyHSD(anovaINJBC)
+print(tukeyINJBC)
+cldBC <- multcompLetters4(anovaINJBC, tukeyINJBC)
+print(cldBC)
+TkBC <- group_by(CrabData, InjLV) %>%
+  summarise(mean=mean(Le.Crens.BC), quant = quantile(Le.Crens.BC, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the Tk table
+cldBC <- as.data.frame.list(cldBC$InjLV)
+TkBC$cldBC <- cldBC$Letters
+
+print(TkBC)
+ggplot(CrabData, aes(InjLV, Le.Crens.BC)) + 
+  geom_boxplot()
+
+# extracting the compact letter display and adding to the Tk table
+cldBC <- as.data.frame.list(cldBC$feed)
+TkBC$cldBC <- cldBC$Letters
+####################BioMass#########################################################
+
+BMvET <-ggplot(aes(x = Biomass, y = EscapeTemp, color = factor(InjLV, labels =c("No Inj","Chip Claw","Missing Claw", "Missing Leg", "Missign 2+ Limbs")) , group = 1 ), data = CrabData)+
+  geom_point()+ 
+  labs(color = "Injuries")+
+  xlab("Biomass (g)")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+BMvET + theme(text = element_text(size = 20))  
+summary(lm(EscapeTemp~Biomass, data=CrabData))
+
+##################Sex and Repro vs Escapr Temp#########################################
+datclean <- na.omit(subset(CrabData, select = c(EscapeTemp, SexNum)))
+Crabsex <- ggplot(datclean, aes(x=SexNum, y=EscapeTemp, na.rm = TRUE, color=SexNum)) +
+  geom_boxplot(na.rm = TRUE)+
+  xlab("Sex")+
+  ylab("Escape Temperature (°C)")
+
+Crabsex + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("1" = "Males", "2" = "Females"
+)) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")
+anovaSex <- aov(EscapeTemp ~ SexNum, data = CrabData)
+summary(anovaSex) 
+
+datRclean <- na.omit(subset(CrabData, select = c(EscapeTemp, Reproductive.State..0.1.)))
+CrabRep <- ggplot(datRclean, aes(x=Reproductive.State..0.1., y=EscapeTemp, color=Reproductive.State..0.1.)) +
+  geom_boxplot()+
+  xlab("Reproductive State")+
+  ylab("Escape Temperature (°C)")
+
+CrabRep + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("1" = "No eggs", "2" = "Carrying eggs", "3" = "Males"
+)) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")   
+anovaRep <- aov(EscapeTemp ~ Reproductive.State..0.1., data = CrabData)
+summary(anovaRep) 
+names(CrabData)
+
+CrabDataNOInjs$Reproductive.State..0.1. <- as.factor(CrabDataNOInjs$Reproductive.State..0.1.)
+CrabDataNOInjs$SexNum <- as.factor(CrabDataNOInjs$SexNum)
+datcleanREPBC <- na.omit(subset(CrabDataNOInjs, select = c(Le.Crens.BC, Reproductive.State..0.1.)))
+CrabRep <- ggplot(datcleanREPBC, aes(x=Reproductive.State..0.1., y=Le.Crens.BC, color=Reproductive.State..0.1.)) +
+  geom_boxplot()+
+  xlab("Reproductive State")+
+  ylab("Le Cren's Body Condition")
+
+CrabRep + theme(text = element_text(size = 20))+ scale_x_discrete(labels=c("1" = "No eggs", "2" = "Carrying eggs"
+)) +
+  theme(axis.text.x = element_text(size=13, angle=25),) + theme(legend.position = "none")   
+anovaRep <- aov(Le.Crens.BC ~ Reproductive.State..0.1., data = CrabDataNOInjs)
+summary(anovaRep) 
+
+
+################Seasonal variation vs escape temp ###########################################
+
+CrabData$Date<-as.POSIXct(CrabData$Date, format= "%m/%d/%Y")
+CrabAna21 <- 
+  ggplot(aes(x = Date, y = EscapeTemp), data = CrabData)+
+  geom_point()+
+  ylab("Escape Temperature °C")+
+  scale_x_datetime(date_breaks = "30 day", date_labels =  "%b %Y")
+
+CrabAna21 + theme(text = element_text(size = 20)) +theme(axis.text.x = element_text(size=13, angle=-90),)
+summary(lm(EscapeTemp~Date, data=CrabData))
+
+
+CrabData$Date<-as.POSIXct(CrabData$Date, format= "%m/%d/%Y")
+CrabAna21 <- 
+  ggplot(aes(x = Date, y = EscapeTemp, col=SexNum), data = CrabData)+
+  geom_point()+
+  ylab("Escape Temperature °C")+
+
+  scale_x_datetime(date_breaks = "30 day", date_labels =  "%b")
+
+CrabAna21 + theme(text = element_text(size = 20)) +theme(axis.text.x = element_text(size=15, angle=25),)
+summary(lm(EscapeTemp~Date, data=CrabData))
+
+my_mod <- lm(EscapeTemp ~ Date, CrabData) 
+my_coef <- coef(my_mod)            # Extract coefficients of model
+my_coef     
+
+STVvESTone.way <- aov(EscapeTemp ~ as.factor(Date), data = CrabData)
+summary(STVvESTone.way)
+######################4 days prior max temp vs escape temp############################################
+class(EscT$Date)
+EscT$Date <- as.character(EscT$Date)
+CrabData$Date <- as.character(CrabData$Date)
+
+EscT = read.csv("C:/Users/cestr/Downloads/DataforReseach/JointRK123456Temp21.csv")
+EsCT = RATemps2021Mean ####makes EsCT with most current Rock Temps 
+names(EscT)
+view(EsCT)
+EscT <- full_join(EsCT, CrabData, by = "Date")
+
+library(plyr)
+EscTdays=unique(CrabData$Day)
+view(newdata)
+
+days=c(EscTdays-1,EscTdays-2,EscTdays-3,EscTdays-4) # gets julian days for the 4 days preceding the sampling date
+newdata=EscT[EscT$Day.x %in% days,] #makes a dataframe with the maximum temperatures for each date 4 days prior
+MaxTs = c(max(newdata[1:4,]$RAMaxTempC),max(newdata[5:8,]$RAMaxTempC), max(newdata[9:12,]$RAMaxTempC),max(newdata[13:16,]$RAMaxTempC),max(newdata[17:20,]$RAMaxTempC),max(newdata[21:24,]$RAMaxTempC), max(newdata[25:28,]$RAMaxTempC),max(newdata[29:32,]$RAMaxTempC),max(newdata[33:36,]$RAMaxTempC),max(newdata[37:40,]$RAMaxTempC), max(newdata[41:44,]$RAMaxTempC),max(newdata[45:48,]$RAMaxTempC),max(newdata[49:52,]$RAMaxTempC),max(newdata[53:56,]$RAMaxTempC), max(newdata[57:60,]$RAMaxTempC),max(newdata[61:64,]$RAMaxTempC), max(newdata[65:68,]$RAMaxTempC),max(newdata[69:72,]$RAMaxTempC),max(newdata[73:76,]$RAMaxTempC),max(newdata[77:80,]$RAMaxTempC),max(newdata[81:84,]$RAMaxTempC),max(newdata[85:88,]$RAMaxTempC),max(newdata[89:92,]$RAMaxTempC),max(newdata[93:96,]$RAMaxTempC),max(newdata[97:100,]$RAMaxTempC))   # this is clunky and manual, and I'm sure there's a better way to do it! Max temp for 4 days prior to filed days 
+
+Maxtperday=data.frame(EscTdays,MaxTs)
+# use "Lookup" package to match days between Maxtperday and EscT and then return the maxT
+library(lookup)
+CrabData$MaxT = lookup(CrabData$Day,Maxtperday$EscTdays,Maxtperday$MaxTs,nomatch=NA)
+View(CrabData)
+head(EscT) # max T temperature data for 4 days preceding asssay added for first n=87 individuals.
+
+ggplot(data=CrabData, aes(y=EscapeTemp, x=MaxT))+geom_point(size=3)+ geom_smooth(method="lm")+theme(text = element_text(size=20))+scale_y_continuous("Escape Temperature (?C)")+ scale_x_continuous("Maximum Habitat Temperature during 4 days prior to assay (?C)")
+y2 = lm(EscapeTemp~MaxT,data=CrabData)
+anova(y2)
+summary(y2)
+ggplot(data=CrabData, aes(y=EscapeTemp, x=MaxT))+geom_point(size=3)+ theme(text = element_text(size=20))+scale_y_continuous("Escape Temperature (°C)")+ scale_x_continuous("Maximum Habitat Temperature during 4 days prior to assay (°C)")
+y = lm(EscapeTemp~MaxT,data=CrabData)
+anova(y)
+###########################Escape temps vs BC###############################################
+class(CrabData$EscapeTemp)
+CrabData$EscapeTemp <- as.numeric(CrabData$EscapeTemp)
+CrabData$SexNum <- as.factor(CrabData$SexNum)
+names(CrabData)
+ggplot(aes(x = Body.Condition.Fultonâ..s..K..Dry, y = EscapeTemp), data = CrabData)+
+  geom_poit()
+names(CrabData)
+
+compare_means(EscapeTemp ~ Body.Condition.Fultonâ..s..K., data = CrabData)
+
+CrabData[CrabData == "n.a."] <- NA
+
+CWvET <-ggplot(aes(x = Carapace.Width..mm., y = EscapeTemp, ), data = CrabData)+
+  geom_point()+ 
+  xlab("Carapace Width (mm)")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+CWvET + theme(text = element_text(size = 20))  
+summary(lm(EscapeTemp~Carapace.Width..mm., data=CrabData))
+
+names(CrabData)
+BCvET <-ggplot(aes(x = Body.Condition.FultonÃ...s..K..Dry, y = EscapeTemp,color = factor(InjLV, labels =c("No Inj","Chip Claw","Missing Claw", "Missing Leg", "Missign 2+ Limbs")) , group = 1 ), data = CrabData)+
+  geom_point()+ 
+  labs(color = "Injuries")+
+  xlab("Fultons K Body Condition")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+BCvET + theme(text = element_text(size = 20))  
+summary(lm(EscapeTemp~Body.Condition.FultonÃ...s..K..Dry, data=CrabData))
+
+
+CLvWW <-ggplot(aes(x = Carapace.Length..mm., y = Wet.weight.Lab..g.), data = CrabData)+
+  geom_point()+
+  xlab("CL")+
+  ylab("WW")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+CLvWW + theme(text = element_text(size = 20))  
+summary(lm(Wet.weight.Lab..g.~Carapace.Length..mm., data=CrabData))
+
+LCvET <-ggplot(aes(x = Le.Crens.BC, y = EscapeTemp,color = factor(InjLV, labels =c("No Inj","Chip Claw","Missing Claw", "Missing Leg", "Missign 2+ Limbs")) , group = 1), data = CrabData)+
+  geom_point()+
+  labs(color = "Injuries")+
+  xlab("Le Cren's Body Condition Index")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+LCvET + theme(text = element_text(size = 20))  
+summary(lm(Le.Crens.BC~EscapeTemp, data=CrabData))
+
+WeightVET <-ggplot(aes(x = Carapace.Width..mm., y = EscapeTemp), data = CrabData)+
+  geom_point()+
+  xlab("Carapace width (mm)")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+WeightVET + theme(text = element_text(size = 20))  
+summary(lm(Carapace.Width..mm.~EscapeTemp, data=CrabData))
+
+####################ANOVA Tests and multi linear regression #######################################  
+names(CrabData)
+
+one.way <- aov(EscapeTemp ~ as.factor(InjLV), data = CrabData)
+
+summary(one.way)
+TukeyHSD(one.way)
+
+one.way <- aov(EscapeTemp ~ as.factor(SexNum), data = CrabData)
+
+summary(one.way)
+TukeyHSD(one.way)
+
+model <- lm(EscapeTemp ~ as.factor(InjLV) * Body.Condition.Fultonâ..s..K..Dry * as.factor(SexNum) + as.factor(Reproductive.State..0.1.), data = CrabData)
+summary(model)
+summary(model)$coefficient
+##################Get Mean, Max, Min Microhab temp 2015##################################################
+FRTMin2015<-ddply(Rossdata,.(date), function(d) min(d$temp))
+head(FRTMin2015)
+names(FRTMin2015)=c("Date","MinTempC")
+
+FRTMax2015<-ddply(Rossdata,.(date), function(d) max(d$temp))
+head(FRTMax2015)
+names(FRTMax2015)=c("Date","MaxTempC")
+
+FRTMea2015<-ddply(Rossdata,.(date), function(d) mean(d$temp))
+head(FRTMea2015)
+names(FRTMea2015)=c("Date","MeanTempC")
+
+JointRAMMTemp15 <- full_join(FRTMin2015, FRTMax2015, by = "Date") 
+JointRAMMMTemp15 <- full_join(JointRAMMTemp15, FRTMea2015, by = "Date")
+view(JointRAMMMTemp15)
+
+Tdata2015=as.numeric(c(JointRAMMMTemp15$MinTempC,JointRAMMMTemp15$MeanTempC,JointRAMMMTemp15$MaxTempC)) 
+
+Temperature2015=as.factor(c(rep("minumum",367),rep("mean",367),rep("maximum",367)))
+Dates2015=c(rep(JointRAMMMTemp15$Date,3)) 
+TData2015 = data.frame(Tdata2015,Temperature2015,Dates2015)
+
+TData2015$Dates20152=as.Date(TData2015$Dates2015,format="%m/%d/%Y")
+TData2015 = TData2015[order(TData2015$Dates20152),]
+TData2015$Days = decimal_date(TData2015$Dates20152)
+
+ggplot(data=TData2015, aes(x=Days,y=Tdata2015,color=Temperature2015))+
+  geom_line(alpha=0.9)+
+  scale_color_manual(values=c("black","red","blue"))+
+  scale_y_continuous("Microhabitat Temperature °C")+scale_x_continuous("Date")+scale_size_manual(values=c(2,1,1))+theme(text = element_text(size=20))
+
+############################Bodega Bay Supp Data####################################
+BodegaBaySuppData<- read.csv("C:/Users/cestr/Downloads/BodegaBaySuppData.csv")
+BodegaBaySuppData$Date = substr(BodegaBaySuppData$time,1,10)  #split time and day apart 
+BodegaBaySuppData$Time = substr(BodegaBaySuppData$time,11,17) 
+write.csv(BodegaBaySuppData, "c:BodegaBaySuppDataForm.csv")
+BodegaBaySuppDataForm<- read.csv("C:/Users/cestr/Downloads/BodegaBaySuppDataForm.csv")
+View(BodegaBaySuppDataForm)
+
+BBSuppDataFormMean<-ddply(BodegaBaySuppDataForm,.(Date), function(d) mean(d$air_temp))
+head(BBSuppDataFormMean)
+names(BBSuppDataFormMean)=c("Date","MeanTemp")
+write.csv(BBSuppDataFormMean, "c:BBSuppDataFormMean.csv")
+
+BBSuppDataFormMax<-ddply(BodegaBaySuppDataForm,.(Date), function(d) max(d$air_temp))
+head(BBSuppDataFormMax)
+names(BBSuppDataFormMax)=c("Date","MaxTempC")
+View(BBSuppDataFormMax)
+
+BBSuppDataFormMin<-ddply(BodegaBaySuppDataForm,.(Date), function(d) min(d$air_temp))
+head(BBSuppDataFormMin)
+names(BBSuppDataFormMin)=c("Date","MinTempC")
+
+
+BBSuppDataMM <- full_join(BBSuppDataFormMean, BBSuppDataFormMax, by = "Date")
+BBSuppDataMMM <- full_join(BBSuppDataMM, BBSuppDataFormMin, by = "Date")
+View(BBSuppDataMMM)
+
+BBSuppDataForR1<- read.csv("C:/Users/cestr/Downloads/BBDataForR1.csv")
+BBSuppDataForR1$Date = substr(BBSuppDataForR1$time,1,10)  #split time and day apart 
+BBSuppDataForR1$Time = substr(BBSuppDataForR1$time,11,17) 
+write.csv(BBSuppDataForR1, "c:BBDataForRock1.csv")
+BBSuppDataForR1<- read.csv("C:/Users/cestr/Downloads/BBDataForRock1.csv")
+View(BBSuppDataForR1)
+
+BBSuppDataForR1Max<-ddply(BBSuppDataForR1,.(Date), function(d) min(d$air_temp))
+head(BBSuppDataForR1Max)
+names(BBSuppDataForR1Max)=c("Date","MaxTempC")
+View(BBSuppDataForR1Max)
+
+MaxAtmovRock1Temp <- full_join(BBSuppDataForR1Max, RATemps2021Mean, by = "Date")
+write.csv(MaxAtmovRock1Temp, "c:/Users/cestr/Downloads/MaxAtmovRock1TempWithSupp.csv")
+MaxAtmovRock1TempWithSupp<- read.csv("C:/Users/cestr/Downloads/MaxAtmovRock1TempWithSupp.csv")
+view(MaxAtmovRock1TempWithSupp)
+
+TempModelR1 <- ggplot(MaxAtmovRock1TempWithSupp, aes(x = R1TempC, y = MaxTempC)) +
+  geom_point(color='blue')+
+  geom_smooth(method="lm")
+TempModelR1
+TempModelR1 + theme(text = element_text(size = 20))
+summary(lm(air_temp~R1TempC, data=MaxAtmovRock1TempWithSupp))
+
+####################Comparing Bodega station and ross station##########################
+
+BBDataforComp<- read.csv("C:/Users/cestr/Downloads/BBDataforComp.csv")  #BB data to be compared with my station data
+BBDataforComp$Date = substr(BBDataforComp$time,1,10)  #split time and day apart 
+BBDataforComp$Time = substr(BBDataforComp$time,11,21) 
+names(BBDataandWSDataCompMean)
+view(BBDataandWSDataCompMean)
+BBDataforCompMean<-ddply(BBDataforComp,.(Date), function(d) mean(d$Air.Temp)) ######daily mean for Max
+head(BBDataforCompMean)
+names(BBDataforCompMean)=c("Date","Air.Temp")
+write.csv(BBDataforCompMean, "c:/Users/cestr/Downloads/BBDataforCompMean.csv")
+BBDataandWSDataCompMean1<- read.csv("C:/Users/cestr/Downloads/MMMAtmovRockTempWOSupp.csv")  #BB data to be compared with my station data
+BBDataandWSDataCompMean <- ggplot(BBDataandWSDataCompMean1, aes(x = Air.TempBB, y = AtmoTemp)) +
+  geom_point(color='blue')+
+  geom_smooth(method="lm")
+BBDataandWSDataCompMean
+BBDataandWSDataCompMean + theme(text = element_text(size = 20))
+summary(lm(Air.TempBB~AtmoTemp, data=BBDataandWSDataCompMean1))
+
+###################Weather station variable graphs####################################
+WeatherData4_9_21$Date<-as.POSIXct(WeatherData4_9_21$Date, format= "%m/%d/%Y")
+
+OutHum <-ggplot(WeatherData4_9_21, aes(x = Days, y = OutHum)) +
+  geom_line(color='purple')+
+  scale_fill_viridis_c() + 
+  theme(axis.ticks.x = element_blank(),axis.title.x = element_blank(),
+        axis.text.x = element_blank())
+scale_x_datetime(date_breaks = "1 month", date_labels =  "%b")
+OutHum
+OutHum + theme(text = element_text(size = 20))  
+
+HiTemp <- ggplot(WeatherData4_9_21, aes(x = Days, y = HiTemp)) +
+  geom_line(color='red')+
+  scale_fill_viridis_c() + 
+  theme(axis.ticks.x = element_blank(),axis.title.x = element_blank(),
+        axis.text.x = element_blank())
+HiTemp
+HiTemp + theme(text = element_text(size = 20))  
+
+WindSpeed <- ggplot(WeatherData4_9_21, aes(x = Days, y = WindSpeed)) +
+  geom_line(color='blue')
+WindSpeed
+WindSpeed + theme(text = element_text(size = 20))  
+
+RO2TESTTemps2021 <- RO2TESTTemps2021[-(1:46756),] # get rid of partial day 
+
+RO2Temps2022$Date = substr(RO2Temps2022$Day,1,8)  #split time and day apart 
+RO2Temps2022$Time = substr(RO2Temps2022$Day,12,21) 
+
+View(RO2Temps2022)
+
+RO2TESTTemps2021$ï..ID = RO2TESTTemps2021$ID-46757# reset dateID
+RO2TESTTemps2021$Days <- RO2TESTTemps2021$ID/288
+RO2TESTTemps2021$JulianDate = RO2TESTTemps2021$Days+280  #Set Juilain dates for Microhab temp 
+
+names(RO2TESTTemps2021)
+MicroHabTemp <- ggplot(RO2TESTTemps2021, aes(x = Days, y = TempC)) +
+  geom_line(color='green')
+MicroHabTemp
+MicroHabTemp + theme(text = element_text(size = 20))  
+
+ppi=300
+png("CombinedGraphsJulainDay.png",width=12*ppi, height=8*ppi, res=ppi)
+grid.arrange(OutHum,HiTemp,WindSpeed,MicroHabTemp, ncol=1)
+dev.off()
+
+#####################################Weather and Rock Anaylsis ##########################################
+TempModel <- ggplot(MaxAtmovRockTempWithSupp, aes(x = RAMean, y = AtmoTemp)) +
+  geom_point(color='blue')+
+  xlab("Mean Microhabiatat Temperature (°C)")+
+  ylab("Mean Atmosheric Temperature (°C)")+
+  geom_smooth(method="lm")
+TempModel
+TempModel + theme(text = element_text(size = 20))  
+
+summary(lm(AtmoHiTemp~RAMean, data=MaxAtmovRockTempWithSupp))
+
+
+names(MaxAtmovRockTempWithSupp)
+TempModel <- ggplot(MaxAtmovRockTempWithSupp, aes(x = RAMean, y = AtmoHiTemp)) + #####polynomial regression
+  geom_point(color='blue')+
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)
+TempModel
+TempModel + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~RAMean, data=MaxAtmovRockTempWithSupp))
+
+names(MaxAtmovRockTempWithSupp)
+TempModel <- ggplot(MaxAtmovRockTempWithSupp, aes(x = RAMean, y = AtmoHiTemp)) +
+  geom_point(color='blue')+
+  geom_smooth(method="lm")
+TempModel
+TempModel + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~RAMean, data=MaxAtmovRockTempWithSupp))
+
+TempModelR2 <- ggplot(MaxAtmovRockTempWithSupp, aes(x = R2TempC, y = AtmoHiTemp)) +
+  geom_point(color='blue')+
+  geom_smooth(method="lm")
+TempModelR2
+TempModelR2 + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~R2TempC, data=MaxAtmovRockTempWithSupp))
+
+TempModelR3 <- ggplot(MaxAtmovRockTempWithSupp, aes(x = R3TempC, y = AtmoHiTemp)) +
+  geom_point(color='red')+
+  geom_smooth(method="lm",color='red')
+TempModelR3
+TempModelR3 + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~R3TempC, data=MaxAtmovRockTempWithSupp))
+
+TempModelR4 <- ggplot(MaxAtmovRockTempWithSupp, aes(x = R4TempC, y = AtmoHiTemp)) +
+  geom_point(color='green')+
+  geom_smooth(method="lm",color='green')
+TempModelR4
+TempModelR4 + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~R4TempC, data=MaxAtmovRockTempWithSupp))
+
+TempModelR5 <- ggplot(MaxAtmovRockTempWithSupp, aes(x = R5TempC, y = AtmoHiTemp)) +
+  geom_point(color='purple')+
+  geom_smooth(method="lm",color='purple')
+TempModelR5
+TempModelR5 + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~R5TempC, data=MaxAtmovRockTempWithSupp))
+
+TempModelR6 <- ggplot(MaxAtmovRockTempWithSupp, aes(x = R6TempC, y = AtmoHiTemp)) +
+  geom_point(color='orange')+
+  geom_smooth(method="lm", color='orange')
+TempModelR6
+TempModelR6 + theme(text = element_text(size = 20))
+summary(lm(AtmoHiTemp~R6TempC, data=MaxAtmovRockTempWithSupp))
+
+ppi=300
+png("CombinedMeanHabTempVMaxAtmoTemp.png",width=12*ppi, height=25*ppi, res=ppi)
+grid.arrange(TempModelR2,TempModelR3,TempModelR4,TempModelR5,TempModelR6, ncol=1)
+dev.off()
+
+##################Min, Mean, Max Microhab temp overall 2022###############################################
+MinT <- read.csv("/Users/Downloads/JointRK123456MinTemp21.csv")
+EscT = read.csv("/Users/Downloads/JointRK123456Temp21.csv")
+view(MinT)
+JointRAMMMTemp22 <- full_join(MinT, EscT, by = "Date") 
+names(JointRAMMMTemp22)
+
+# make new dataframe
+Tdata=as.numeric(c(JointRAMMMTemp22$RAMin,JointRAMMMTemp22$RAMean,JointRAMMMTemp22$RAMaxTempC)) #Cant find variable in data?
+
+Temperature=as.factor(c(rep("minumum",367),rep("mean",367),rep("maximum",367)))
+Dates=c(rep(JointRAMMMTemp22$Date,3)) 
+TData = data.frame(Tdata,Temperature,Dates)
+
+TData$Dates2=as.Date(TData$Dates,format="%m/%d/%Y")
+TData = TData[order(TData$Dates2),]
+TData$Days = decimal_date(TData$Dates2)
+
+write.csv(TData, "c:TData")
+TData = read.csv("/Users/cestr/Downloads/TData.csv")
+view(TData)
+
+# make plot
+ggplot(data=TData, aes(x=Days,y=Tdata,color=Temperature))+
+  geom_line(alpha=0.9)+
+  scale_color_manual(values=c("black","red","blue"))+
+  scale_y_continuous("Microhabitat Temperature °C")+scale_x_continuous("Date")+scale_size_manual(values=c(2,1,1))+theme(text = element_text(size=20))
+
+#####################Weather variables for predicitvie model############################################
+names(WeatherData4_9_21)
+WstatHum<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$OutHum)) ######daily mean for atmo hum
+head(WstatHum)
+names(WstatHum)=c("Date","OutHum")
+view(WstatHum)
+
+MaxAtmovRockTempWithSupp$Date <- as.Date(MaxAtmovRockTempWithSupp$Date)
+MaxAtmovRockTempWSupp_Hum <- full_join(MaxAtmovRockTempWithSupp, WstatHum, by = "Date")
+view(MaxAtmovRockTempWSupp_Hum)
+
+WstatDewPT<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$DewPt.)) ######daily mean for DewPT
+head(WstatDewPT)
+names(WstatDewPT)=c("Date","DewPt")
+view(WstatDewPT)
+MaxAtmovRockTempWSupp_HD <- full_join(MaxAtmovRockTempWSupp_Hum, WstatDewPT, by = "Date")
+view(MaxAtmovRockTempWSupp_HD)##########END
+
+WstatWind<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$WindSpeed)) ######daily mean for atmo temp
+head(WstatWind)
+names(WstatWind)=c("Date","WindSpeed")
+view(WstatWind)
+MaxAtmovRockTempWSupp_HDW <- full_join(MaxAtmovRockTempWSupp_HD, WstatWind, by = "Date")
+view(MaxAtmovRockTempWSupp_HDW)
+
+WstatInEMC<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$InEMC)) ######daily mean for InEMC
+head(WstatInEMC)
+names(WstatInEMC)=c("Date","InEMC")
+view(WstatInEMC)
+MaxAtmovRockTempWSupp_HDWE <- full_join(MaxAtmovRockTempWSupp_HDW, WstatInEMC, by = "Date")
+view(MaxAtmovRockTempWSupp_HDWE)
+
+WstatHeatDDC<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$HeatDD)) ######daily mean for HeatDD
+head(WstatHeatDDC)
+names(WstatHeatDDC)=c("Date","HeatDD")
+view(WstatHeatDDC)
+MaxAtmovRockTempWSupp_HDWEH <- full_join(MaxAtmovRockTempWSupp_HDWE, WstatHeatDDC, by = "Date")
+view(MaxAtmovRockTempWSupp_HDWEH)
+
+WstatInHeat<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$InHeat)) ######daily mean for InHeat
+head(WstatInHeat)
+names(WstatInHeat)=c("Date","InHeat")
+view(WstatInHeat)
+MaxAtmovRockTempWSupp_HDWEHI <- full_join(MaxAtmovRockTempWSupp_HDWEH, WstatInHeat, by = "Date")
+view(MaxAtmovRockTempWSupp_HDWEHI)
+
+WstatHeatIndex<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$HeatIndex)) ######daily mean for HeatIndex
+head(WstatHeatIndex)
+names(WstatHeatIndex)=c("Date","HeatIndex")
+view(WstatHeatIndex)
+MaxAtmovRockTempWSupp_HDWEHIH <- full_join(MaxAtmovRockTempWSupp_HDWEHI, WstatHeatIndex, by = "Date")
+view(MaxAtmovRockTempWSupp_HDWEHIH)
+write.csv(MaxAtmovRockTempWSupp_HDWEHIH, "c:/Users/cestr/Downloads/MaxAtmovRockTempWSupp_HDWEHIH.csv")
+
+WstatBar<-ddply(WeatherData4_9_21,.(Date), function(d) mean(d$Bar)) ######daily mean for Bar
+head(WstatBar)
+names(WstatBar)=c("Date","Bar")
+view(WstatBar)
+MaxAtmovRockTempWSupp_HDWEHIHB <- full_join(MaxAtmovRockTempWSupp_HDWEHIH, WstatBar, by = "Date")
+write.csv(MaxAtmovRockTempWSupp_HDWEHIHB, "c:/Users/cestr/Downloads/MaxAtmovRockTempWSupp_HDWEHIHB.csv")
+
+names(MaxAtmovRockTempWSupp_HDWEHIHBO)
+TempModelHum <- ggplot(MaxAtmovRockTempWSupp_HDWEHIHBO, aes(x = RAMean, y = OutHum)) + #####polynomial regression
+  geom_point(color='blue')+
+  stat_smooth(method = "lm", se=TRUE, fullrange=FALSE, level=0.95,)+
+  xlab("Mean Microhabiatat Temperature (°C)")+
+  ylab("Mean Humidity (%)")
+TempModelHum
+TempModelHum + theme(text = element_text(size = 20))
+summary(lm(OutHum~RAMean, data=MaxAtmovRockTempWSupp_HDWEHIHBO))
+
+
+TempModelWind <- ggplot(MaxAtmovRockTempWSupp_HDWEHIHBO, aes(x = RAMean, y = WindSpeed)) + #####polynomial regression
+  geom_point(color='blue')+
+  stat_smooth(method = "lm",  se=TRUE, fullrange=FALSE, level=0.95,)+
+  xlab("Mean Microhabiatat Temperature (°C)")+
+  ylab("Mean Wind Speed (mph)")
+TempModelWind
+TempModelWind + theme(text = element_text(size = 20))
+summary(lm(WindSpeed~RAMean, data=MaxAtmovRockTempWSupp_HDWEHIHBO))
+
+TempModelWind <- ggplot(MaxAtmovRockTempWSupp_HDWEHIHBO, aes(x = RAMean, y = WindSpeed)) + #####polynomial regression
+  geom_point(color='blue')+
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)+
+  xlab("Mean Microhabiatat Temperature (?C)")+
+  ylab("Mean Wind Speed")
+TempModelWind
+TempModelWind + theme(text = element_text(size = 20))
+summary(lm(WindSpeed~RAMean, data=MaxAtmovRockTempWSupp_HDWEHIHBO))
+names(MaxAtmovRockTempWSupp_HDWEHIHBO)
+
+TempModelDEWPT <- ggplot(MaxAtmovRockTempWSupp_Hum, aes(x = RAMean, y = DewPt)) + #####polynomial regression DEWPT
+  geom_point(color='blue')+
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), size = 1)+
+  xlab("Mean Microhabiatat Temperature (°C)")+
+  ylab("Mean DewPt")
+TempModelDEWPT
+TempModelDEWPT + theme(text = element_text(size = 20))
+summary(lm(DewPt~RAMean, data=MaxAtmovRockTempWSupp_Hum))
+names(MaxAtmovRockTempWSupp_Hum)
+#########AIC################################################
+
+hum.mod <- lm(RAMean ~ OutHum, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+wind.mod <- lm(RAMean ~ WindSpeed, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+temp.mod <- lm(RAMean ~ AtmoTemp, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+InHeat.mod <- lm(RAMean ~ InHeat, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+HeatIndex.mod <- lm(RAMean ~ HeatIndex, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+DewPT.mod <- lm(RAMean ~ DewPt, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+HeatDD.mod <- lm(RAMean ~ HeatDD, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+In.EMC.mod <- lm(RAMean ~ InEMC, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+Bar.mod <- lm(RAMean ~ Bar, data = MaxAtmovRockTempWSupp_HDWEHIHB)#
+
+
+temp.hum.mod <- lm(RAMean ~ AtmoTemp + OutHum, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+temp.hum.inter.mod <- lm(RAMean ~ AtmoTemp*OutHum, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+temp.hum.dew.mod <- lm(RAMean ~ AtmoTemp+OutHum+DewPt, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+temp.hum.dew.inter.mod <- lm(RAMean ~ AtmoTemp*OutHum*DewPt, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+temp.hum.dew.wind.mod <- lm(RAMean ~ AtmoTemp+OutHum+WindSpeed+DewPt, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+temp.hum.dew.wind.inter.mod <- lm(RAMean ~ AtmoTemp*OutHum*WindSpeed*DewPt, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+temp.hum.dew.wind.HeatDD.mod <- lm(RAMean ~ AtmoTemp+OutHum+WindSpeed+DewPt+HeatDD, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+temp.hum.dew.wind.HeatDD.inter.mod <- lm(RAMean ~ AtmoTemp*OutHum*WindSpeed*DewPt*HeatDD, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+
+combination.mod <- lm(RAMean ~ AtmoTemp+OutHum+WindSpeed+DewPt+HeatDD+Bar, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+interaction.mod <- lm(RAMean ~ AtmoTemp*OutHum*WindSpeed*DewPt*HeatDD*Bar, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+models <- list(hum.mod, wind.mod, temp.mod, HeatDD.mod, Bar.mod, DewPT.mod, temp.hum.mod,temp.hum.inter.mod,temp.hum.dew.mod,temp.hum.dew.inter.mod,temp.hum.dew.wind.mod,temp.hum.dew.wind.inter.mod,temp.hum.dew.wind.HeatDD.mod,temp.hum.dew.wind.HeatDD.inter.mod,combination.mod, interaction.mod)
+model.names <- c('hum.mod', 'wind.mod', 'temp.mod', 'HeatDD.mod', 'Bar.mod', 'DewPT.mod', 'temp.hum.mod','temp.hum.inter.mod','temp.hum.dew.mod', 'temp.hum.dew.inter.mod', 'temp.hum.dew.wind.mod', 'temp.hum.dew.wind.inter.mod', 'temp.hum.dew.wind.HeatDD.mod', 'temp.hum.dew.wind.HeatDD.inter.mod', 'combination.mod', 'interaction.mod')
+AICCOM <- aictab(cand.set = models, modnames = model.names)
+view(AICCOM)
+write.table(AICCOM, file = 'C:/Users/cestr/Downloads/AIC11_26_22.txt', col.names = TRUE,
+            row.names = FALSE, sep = "\t")
+
+
+combination2.mod <- lm(RAMean ~ AtmoTemp + OutHum + WindSpeed + DewPt+ InHeat + HeatIndex, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+interaction2.mod <- lm(RAMean ~ AtmoTemp*OutHum*WindSpeed*DewPt*InHeat*HeatDD, data = MaxAtmovRockTempWSupp_HDWEHIHB)
+
+models2 <- list(hum.mod, wind.mod, temp.mod, HeatDD.mod, Bar.mod, DewPT.mod, temp.hum.mod, temp.hum.dew.mod,temp.hum.dew.inter.mod,temp.hum.dew.wind.mod,temp.hum.dew.wind.inter.mod,temp.hum.dew.wind.HeatDD.mod, temp.hum.dew.wind.HeatDD.inter.mod,combination.mod, interaction.mod)
+model.names2 <- c('hum.mod', 'wind.mod', 'temp.mod', 'HeatDD.mod', 'Bar.mod', 'DewPT.mod', 'temp.hum.mod','temp.hum.dew.mod', 'temp.hum.dew.inter.mod', 'temp.hum.dew.wind.mod', 'temp.hum.dew.wind.inter.mod', 'temp.hum.dew.wind.HeatDD.mod', 'temp.hum.dew.wind.HeatDD.inter.mod', 'combination.mod', 'interaction.mod')
+AICModelCom <- aictab(cand.set = models2, modnames = model.names2)
+view(AICModelCom)
+write.table(AICModelCom, file = 'C:/Users/cestr/Downloads/AIC10_19_22.txt', col.names = TRUE,
+           row.names = FALSE, sep = "\t")
+
+###################NEWPCA########################################
+WeatherPCA$OutHum <- as.numeric(WeatherPCA)
+WeatherPCA$Season <- factor(WeatherPCA$Season)
+
+view(WeatherPCA)
+
+PCAresults <- prcomp(WeatherPCA[,2:26], scale = TRUE)
+PCAresults$rotation <- -1*PCAresults$rotation
+PCAresults$rotation
+
+biplot(PCAresults, scale = 0)
+
+fviz_pca_biplot(PCAresults, repel = TRUE) ### group by months of 2 to 3 months together
+
+res.pca <- PCA(datasetnew,  graph = FALSE)
+res.pca$eig
+
+fviz_pca_biplot(PCAresults., col.ind = PCAresults$Season, palette = "jco", addEllipses = TRUE, label = "var", col.var = "black", repel = TRUE, legend.title = "Season") 
+
+# Prepare the data
+df <- iris[, -5]
+# Principal component analysis
+pca <- prcomp(df, scale. = TRUE)
+# Plot
+autoplot(pca, loadings = TRUE, loadings.label = TRUE,
+         data = iris, colour = 'Species')
+head(iris)
+
+fviz_pca_biplot(PCAresults, habillage=WeatherPCA$Season, label="none") ### group by months of 2 to 3 months together
+fviz_pca_ind(PCAresults, habillage=WeatherPCA$Season, label="none") ### group by months of 2 to 3 months together
+fviz_pca_biplot(PCAresults, habillage=WeatherPCA$Season, addEllipses=TRUE, ellipse.level=0.95, col.var = "black") ### group by months of 2 to 3 months together
+fviz_pca_ind(PCAresults, habillage=WeatherPCA$Season) ### group by months of 2 to 3 months together
+
+#################CorrelationMartrix####################################################
+weather.data.wide<-read.csv("C:/Users/cestr/Downloads/WeatherData4_9_21MODPCA.csv", header=TRUE)
+names(weather.data.wide)
+weather.data.wide$X<-NULL
+corr.weather.data<-weather.data.wide[,order(names(weather.data.wide))]
+
+#generate correlation matrix
+write.csv(corr.weather.data, "c:/Users/cestr/Downloads/corrmatdata.csv")
+view(corr.weather.data)
+corr.weather.data <- read_csv("C:/Users/cestr/Downloads/corrmatdata.xcsv.csv")
+
+weather.corr<-cor(corr.weather.data)
+
+#make corplot colors
+col1 <- colorRampPalette(c("red", "white", "blue"))
+
+#make stream corrplot
+par(oma=c(0,0,2,0))
+
+corrplot(weather.corr, method = "ellipse", col=col1(10), tl.col="black", tl.cex = 0.8, tl.pos="r", cl.pos="r", cl.ratio=0.2, type="lower")
+
+
+#########Prediction Model##############################################
+view(MaxAtmovRockTempWSupp_HDWEHIHB)
+MHTPmodel <- lm(RAMean ~ AtmoTemp + OutHum, data=MaxAtmovRockTempWSupp_HDWEHIHB)
+summary(MHTPmodel)
+
+newMHT <- data.frame(AtmoTemp=c(11.36), OutHum=c(80.56))
+
+#use the fitted model to predict the rating for the new player
+predict(MHTPmodel, newdata=newMHT)
+
+linear_modelMHTP <- lm(RAMean~AtmoTemp+OutHum, MaxAtmovRockTempWSupp_HDWEHIHB )
+summary(linear_modelMHTP)
+length(MaxAtmovRockTempWSupp_TEST)
+length(linear_modelMHTP)
+
+MaxAtmovRockTempWSupp_TEST <- MaxAtmovRockTempWSupp_HDWEHIHB
+
+length(MaxAtmovRockTempWSupp_TEST) <- length(linear_modelMHTP) 
+
+plot_dataMHTP <- data.frame(Predicted_value = predict(linear_modelMHTP), Observed_value = MaxAtmovRockTempWSupp_TEST$RAMean)
+
+ggplot(plot_dataMHTP, aes(x = Predicted_value, y = Observed_value)) +
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1, color = "green")
+
+RockTempModel = lm(RAMean~AtmoTemp + OutHum,MaxAtmovRockTempWSupp_HDWEHIHBO) # make current the model
+RockTempPreds = data.frame(predict(RockTempModel,newdata=MaxAtmovRockTempWSupp_HDWEHIHBO[,c(6,17)]))  # 6 & 17 are the two columns with AtmoTemp & OutHum
+plot(RockTempPreds[,1]~MaxAtmovRockTempWSupp_HDWEHIHBO$RAMean)# makes a basic plot - use ggplot to make it better.
+
+
+PMwLF <-ggplot(aes(x = RAMean, y = RockTempPreds[,1],), data = MaxAtmovRockTempWSupp_HDWEHIHBO)+
+  geom_point()+ 
+  xlab("Mean Rock Temperatures(°C)")+
+  ylab("Rock Temperature Predictions(°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+PMwLF + theme(text = element_text(size = 20))  
+summary(lm(RockTempPreds[,1]~RAMean, data=MaxAtmovRockTempWSupp_HDWEHIHBO))
+
+summary(RockTempModel)
+names(MaxAtmovRockTempWSupp_HDWEHIHB)
+RockTempModel = lm(RAMaxTempC~AtmoHiTemp + OutHum,MaxAtmovRockTempWSupp_HDWEHIHB) # make the model
+RockTempPreds = data.frame(predict(RockTempModel,newdata=MaxAtmovRockTempWSupp_HDWEHIHB[,c(6,17)]))  # 6 & 17 are the two columns with AtmoTemp & OutHum
+plot(RockTempPreds[,1]~MaxAtmovRockTempWSupp_HDWEHIHB$RAMaxTempC) # makes a basic plot - use ggplot to make it better.
+summary(RockTempModel)
+
+########################AIC for Crabdata########################################################
+injury.mod <- lm(EscapeTemp ~ InjLV, data = CrabData)#
+sex.mod <- lm(EscapeTemp ~ SexNum, data = CrabData)#
+reprostate.mod <- lm(EscapeTemp ~ Reproductive.State..0.1., data = CrabData)#
+size.mod <- lm(EscapeTemp ~ Carapace.Width..mm., data = CrabData)
+bodycond.mod <- lm(EscapeTemp ~ Le.Crens.BC, data = CrabData)#
+weight.mod <- lm(EscapeTemp ~ Weight..g., data = CrabData)
+names(CrabData)
+injury.sex.mod <- lm(EscapeTemp ~ InjLV + SexNum, data = CrabData)
+injury.sex.inter.mod <- lm(EscapeTemp ~ InjLV*SexNum, data = CrabData)
+
+injury.sex.repro.mod <- lm(EscapeTemp ~ InjLV+SexNum+Reproductive.State..0.1., data = CrabData)
+injury.sex.repro.inter.mod <- lm(EscapeTemp ~ InjLV*SexNum*Reproductive.State..0.1., data = CrabData)
+
+injury.sex.repro.size.mod <- lm(EscapeTemp ~ InjLV+SexNum+Carapace.Width..mm.+Reproductive.State..0.1., data = CrabData)
+injury.sex.repro.size.inter.mod <- lm(EscapeTemp ~ InjLV*SexNum*Carapace.Width..mm.*Reproductive.State..0.1., data = CrabData)
+
+injury.sex.repro.size.bodycond.mod <- lm(EscapeTemp ~ InjLV+SexNum+Carapace.Width..mm.+Reproductive.State..0.1.+Le.Crens.BC, data = CrabData)
+injury.sex.repro.size.bodycond.inter.mod <- lm(EscapeTemp ~ InjLV*SexNum*Carapace.Width..mm.*Reproductive.State..0.1.*Le.Crens.BC, data = CrabData)
+
+
+combinationCrab.mod <- lm(EscapeTemp ~ InjLV+SexNum+Carapace.Width..mm.+Reproductive.State..0.1.+Le.Crens.BC+Dry.wieght..mg., data = CrabData)
+interactionCrab.mod <- lm(EscapeTemp ~ InjLV*SexNum*Carapace.Width..mm.*Reproductive.State..0.1.*Le.Crens.BC*Dry.wieght..mg., data = CrabData)
+
+
+modelscrab <- list(injury.mod, sex.mod, reprostate.mod, size.mod, weight.mod, bodycond.mod, injury.sex.mod ,injury.sex.inter.mod,injury.sex.repro.mod,injury.sex.repro.inter.mod,injury.sex.repro.size.mod,injury.sex.repro.size.inter.mod,injury.sex.repro.size.bodycond.mod,injury.sex.repro.size.bodycond.inter.mod,combinationCrab.mod, interactionCrab.mod, combinationCrabSigs.mod)
+model.names <- c('injury.mod', 'sex.mod', 'reprostate.mod', 'size.mod', 'weight.mod', 'bodycond.mod', 'injury.sex.mod ','injury.sex.inter.mod','injury.sex.repro.mod', 'injury.sex.repro.inter.mod', 'injury.sex.repro.size.mod', 'injury.sex.repro.size.inter.mod', 'injury.sex.repro.size.bodycond.mod', 'injury.sex.repro.size.bodycond.inter.mod', 'combinationCrab.mod', 'interactionCrab.mod', 'combinationCrabSigs.mod')
+AICCOMCrab <- aictab(cand.set = modelscrab, modnames = model.names)
+view(AICCOMCrab)
+write.table(AICCOMCrab, file = 'C:/Users/cestr/Downloads/AICCrab4_9_23.txt', col.names = TRUE,
+            row.names = FALSE, sep = "\t")
+
+summary(lm(combinationCrab.mod))
+
+combinationCrabSigs.mod <- lm(EscapeTemp ~ SexNum+Reproductive.State..0.1.+Dry.wieght..mg.+InjLV, data = CrabData)
+
+modelscrab2 <- list(sex.mod, reprostate.mod, weight.mod, bodycond.mod, injury.sex.mod ,injury.sex.inter.mod,injury.sex.repro.mod,injury.sex.repro.inter.mod,injury.sex.repro.size.mod,injury.sex.repro.size.inter.mod,injury.sex.repro.size.bodycond.mod,injury.sex.repro.size.bodycond.inter.mod, combinationCrabSigs.mod)
+model.names2 <- c('injury.mod', 'sex.mod', 'reprostate.mod', 'weight.mod', 'bodycond.mod', 'injury.sex.mod ','injury.sex.inter.mod','injury.sex.repro.mod', 'injury.sex.repro.inter.mod', 'injury.sex.repro.size.mod', 'injury.sex.repro.size.inter.mod', 'injury.sex.repro.size.bodycond.mod', 'injury.sex.repro.size.bodycond.inter.mod', 'combinationCrab2.mod')
+AICCOMCrab2 <- aictab(cand.set = modelscrab2, modnames = model.names2)
+view(AICCOMCrab2)
+
+summary(lm(combinationCrabSigs.mod))
+
+##########################Avg 4 days prior################################################
+names(newdata)
+view(newdata)
+mean(newdata[1:4,]$RAMean)
+newdata$RAMean <- as.numeric(newdata$RAMean)
+
+MeanTs = c(mean(newdata[1:4,]$RAMean),mean(newdata[5:8,]$RAMean), mean(newdata[9:12,]$RAMean),mean(newdata[13:16,]$RAMean),mean(newdata[17:20,]$RAMean),mean(newdata[21:24,]$RAMean), mean(newdata[25:28,]$RAMean),mean(newdata[29:32,]$RAMean),mean(newdata[33:36,]$RAMean),mean(newdata[37:40,]$RAMean), mean(newdata[41:44,]$RAMean),mean(newdata[45:48,]$RAMean),mean(newdata[49:52,]$RAMean),mean(newdata[53:56,]$RAMean), mean(newdata[57:60,]$RAMean),mean(newdata[61:64,]$RAMean), mean(newdata[65:68,]$RAMean),mean(newdata[69:72,]$RAMean),mean(newdata[73:76,]$RAMean),mean(newdata[77:80,]$RAMean),mean(newdata[81:84,]$RAMean),mean(newdata[85:88,]$RAMean),mean(newdata[89:92,]$RAMean),mean(newdata[93:96,]$RAMean),mean(newdata[97:100,]$RAMean))   # this is clunky and manual, and I'm sure there's a better way to do it! Max temp for 4 days prior to filed days 
+
+Meantperday=data.frame(EscTdays,MeanTs)
+view(Meantperday)
+# use "Lookup" package to match days between Meantperday and EscT and then return the maxT
+library(lookup)
+CrabData$MeanT = lookup(CrabData$Day,Meantperday$EscTdays,Meantperday$MeanTs,nomatch=NA)
+View(CrabData)
+head(EscT) # max T temperature data for 4 days preceding asssay added for first n=87 individuals.
+
+ggplot(data=CrabData, aes(y=EscapeTemp, x=MeanT))+geom_point(size=3)+ theme(text = element_text(size=20))+scale_y_continuous("Escape Temperature (°C)")+ scale_x_continuous("Mean Habitat Temperature during 4 days prior to assay (°C)")
+y = lm(EscapeTemp~MeanT,data=CrabData)
+anova(y)
+summary(y)
+######################EscTemp Prediction###########################################
+names(CrabData)
+ETPRvET <-ggplot(aes(x = EscTemp.Prediction, y = EscapeTemp, ), data = CrabData)+
+  geom_point()+ 
+  xlab("Escape Temperature Prediction (°C)")+
+  ylab("Escape Temperature (°C)")+
+  geom_smooth(method="lm", se=TRUE, fullrange=FALSE, level=0.95,)
+
+ETPRvET + theme(text = element_text(size = 20))  
+summary(lm(EscapeTemp~EscTemp.Prediction, data=CrabData))
